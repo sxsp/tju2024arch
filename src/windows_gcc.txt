@@ -1,0 +1,3 @@
+gcc main.cc init.cc cache.cc utils.cc -o try
+
+./try 64 8192 2 1 0 ./../traces/gcc_trace.txt
