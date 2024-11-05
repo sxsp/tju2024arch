@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 // #include <unistd.h>
 // #include <io.h>
 #include "utils.h"
@@ -11,6 +12,7 @@ extern unsigned int L1_REPLACEMENT_POLICY;
 extern unsigned int L1_WRITE_POLICY;
 extern char *trace_file;
 
+extern unsigned SET_NUM;
 extern unsigned int TAG_LENGTH;
 extern unsigned int INDEX_LENGTH;
 extern unsigned int OFFSET_LENGTH;
@@ -69,9 +71,9 @@ int arg_init(int argc, char *argv[])
 	// 	printf("Error: file %s does not exist.\n", trace_file);
 	// 	return 1;
 	// }
-
+	SET_NUM = (unsigned int)(L1_SIZE / (L1_BLOCKSIZE * L1_ASSOC));
 	OFFSET_LENGTH = log2(L1_BLOCKSIZE);
-	INDEX_LENGTH = log2((unsigned int)(L1_SIZE / (L1_BLOCKSIZE * L1_ASSOC)));
+	INDEX_LENGTH = log2(SET_NUM);
 	TAG_LENGTH = 32 - OFFSET_LENGTH - INDEX_LENGTH;
 	return 0;
 }
@@ -84,6 +86,17 @@ void print_init_arg_info()
 	printf("  L1_ASSOC: %u\n", L1_ASSOC);
 	printf("  L1_REPLACEMENT_POLICY: %u\n", L1_REPLACEMENT_POLICY);
 	printf("  L1_WRITE_POLICY: %u\n", L1_WRITE_POLICY);
-	printf("  trace_file: %s\n", trace_file);
+	const char *last_slash = strrchr(trace_file, '/'); // strrchr函数查找最后一次出现字符的指针
+	if (last_slash != NULL)
+	{
+		// 如果找到了斜杠，打印斜杠之后的字符串
+		printf("  trace_file: %s\n", last_slash + 1);
+	}
+	else
+	{
+		// 如果没有找到斜杠，意味着trace_file不包含路径，直接打印
+		printf("  trace_file: %s\n", trace_file);
+	}
+	// printf("  trace_file: %s\n", trace_file);
 	printf("  ===================================\n");
 }

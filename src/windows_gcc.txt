@@ -1,3 +1,7 @@
 gcc main.cc init.cc cache.cc utils.cc -o try
 
-./try 64 8192 2 1 0 ./../traces/gcc_trace.txt
+v1  ./try 16 16384 1 0 0 ./../traces/gcc_trace.txt > my_output        1
+v2  ./try 128 2048 8 0 1 ./../traces/go_trace.txt > my_output 
+v3  ./try 32 4096 4 0 1 ./../traces/perl_trace.txt > my_output 
+v4  ./try 64 8192 2 1 0 ./../traces/gcc_trace.txt > my_output         1
+v5  ./try 32 1024 4 1 1 ./../traces/go_trace.txt > my_output 
